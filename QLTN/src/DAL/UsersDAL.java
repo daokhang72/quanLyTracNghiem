@@ -26,7 +26,7 @@ public class UsersDAL {
 	}
 	// Thêm người dùng mới
     public boolean addUser(UserDTO user) {
-        String sql = "INSERT INTO users (userName, userEmail, userPassword, userFullName, isAdmin) VALUES (?, ?, ?, ?, 0)";
+        String sql = "INSERT INTO users ( userName, userEmail, userPassword, userFullName, isAdmin) VALUES (?, ?, ?, ?, 0)";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, user.getUserName());
             st.setString(2, user.getUserEmail());
