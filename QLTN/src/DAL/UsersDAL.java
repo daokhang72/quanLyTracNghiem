@@ -26,7 +26,7 @@ public class UsersDAL {
 	}
 	// Thêm người dùng mới
     public boolean addUser(UserDTO user) {
-        String sql = "INSERT INTO users (userID, userName, userEmail, userPassword, userFullName, isAdmin) VALUES (?, ?, ?, ?, ?, 0)";
+        String sql = "INSERT INTO users (userName, userEmail, userPassword, userFullName, isAdmin) VALUES (?, ?, ?, ?, 0)";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setString(1, user.getUserName());
             st.setString(2, user.getUserEmail());
@@ -151,5 +151,20 @@ public class UsersDAL {
 			System.err.println(e);
 		}
     	return false;
+    }
+    // kiem tra tồn tại
+    public boolean kiemTraTonTai(String username) {
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) AS Count FROM users WHERE userName = ?");
+            ps.setString(1, username);
+            ResultSet rsExist = ps.executeQuery();
+            if (rsExist.next()) {
+                int count = rsExist.getInt("Count");
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

@@ -39,4 +39,8 @@ public class UserBLL {
 	public boolean resetPass(int userID,String newPass) {
 		return daluser.resetPass(userID, newPass);
 	}
+	//kiem tra tòn tại
+	public boolean kiemTraTonTai(String username) {
+		return daluser.kiemTraTonTai(username);
+	}
 }
