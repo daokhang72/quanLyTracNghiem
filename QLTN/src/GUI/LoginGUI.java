@@ -136,18 +136,20 @@ public class LoginGUI extends JFrame {
 	            	return;
 				}
 				if(user != null) {
-					JOptionPane.showMessageDialog(LoginGUI.this, "Đăng nhập thành công","Success",JOptionPane.INFORMATION_MESSAGE);
-					if(user.isAdmin()) {
-						AdminGUI admingui = new AdminGUI();
-						admingui.setVisible(true);
-						admingui.setExtendedState(JFrame.MAXIMIZED_BOTH);
-					}
-					else {
+//					JOptionPane.showMessageDialog(LoginGUI.this, "Đăng nhập thành công","Success",JOptionPane.INFORMATION_MESSAGE);
+//					if(user.isAdmin()) {
+//						AdminGUI admingui = new AdminGUI();
+//						admingui.setVisible(true);
+//						admingui.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//					}
+//					else {
+					
 						UserGUI usergui = new UserGUI();
 						usergui.setVisible(true);
 						usergui.setExtendedState(JFrame.MAXIMIZED_BOTH);
-					}
-					dispose();
+						dispose();
+//					}
+//					dispose();
 				}else {
 					JOptionPane.showMessageDialog(LoginGUI.this, "Tên đăng nhập hoặc mật khẩu không chính xác","Error",JOptionPane.ERROR_MESSAGE);
 				}
