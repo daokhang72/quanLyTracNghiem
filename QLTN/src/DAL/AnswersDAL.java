@@ -113,4 +113,20 @@ public class AnswersDAL {
             return false;
         }
     }
+    // xác định đáp án đúng
+    public String getRightAnswer(int qid) {
+        String sql = "SELECT awcontent FROM answers WHERE qid = ? AND isRight = 1"; // Lấy nội dung đáp án đúng
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, qid);  // Gán ID câu hỏi
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("awcontent"); // Trả về nội dung đáp án đúng
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Nếu không có đáp án đúng, trả về null
+    }
+
 }
