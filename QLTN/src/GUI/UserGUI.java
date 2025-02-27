@@ -8,17 +8,33 @@ import java.awt.event.MouseEvent;
 
 public class UserGUI extends JFrame{
 	public UserGUI() {
-		GradientPanel sidebar = new GradientPanel(new Color(181, 231, 162),new Color(52, 192, 175));
+		GradientPanel sidebar = new GradientPanel(new Color(52, 192, 175),new Color(181, 231, 162));
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
         sidebar.setPreferredSize(new Dimension(200, getHeight()));
+        sidebar.add(Box.createVerticalStrut(30)); 
+
+        JLabel logoLabel = new JLabel("Quản Lý Trắc Nghiệm");
+        logoLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        logoLabel.setForeground(Color.WHITE);
+        logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel subtitleLabel = new JLabel("NHÓM 00");
+        subtitleLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        subtitleLabel.setForeground(Color.WHITE);
+        subtitleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        sidebar.add(logoLabel);
+        sidebar.add(subtitleLabel);
+
+        sidebar.add(Box.createVerticalStrut(50)); 
 
 
+        
         sidebar.add(Box.createVerticalStrut(100));
-        sidebar.add(createMenuItem("My Info", "icons/user.png"));
-        sidebar.add(createMenuItem("Subjects", "icons/subjects.png"));
-        sidebar.add(createMenuItem("Test", "icons/test.png"));
+        sidebar.add(createMenuItem("Thông Tin Cá Nhân", "src/image/icons/user.png"));
+        sidebar.add(createMenuItem("Môn Học", "src/image/icons/subjects.png"));
+        sidebar.add(createMenuItem("Kiểm Tra", "src/image/icons//test.png"));
         sidebar.add(Box.createVerticalGlue());
-        sidebar.add(createMenuItem("Log out", "icons/logout.png"));
+        sidebar.add(createMenuItem("Log out", "src/image/icons/logout.png"));
     	
         JPanel contentPanel = new JPanel();
         contentPanel.setBackground(Color.WHITE);
@@ -34,7 +50,7 @@ public class UserGUI extends JFrame{
     }
 
     private JPanel createMenuItem(String text, String iconPath) {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    	JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 20));
         panel.setOpaque(false);
         panel.setMaximumSize(new Dimension(200, 40));
         
@@ -44,7 +60,7 @@ public class UserGUI extends JFrame{
         icon.setIcon(new ImageIcon(scaledImg));
 
         JLabel label = new JLabel(text);
-        label.setFont(new Font("Arial", Font.PLAIN, 14));
+        label.setFont(new Font("Arial", Font.BOLD, 14));
         label.setForeground(Color.WHITE);
 
         panel.add(icon);
