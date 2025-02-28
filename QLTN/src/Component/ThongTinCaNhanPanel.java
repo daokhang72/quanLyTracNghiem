@@ -6,14 +6,14 @@ import java.awt.*;
 public class ThongTinCaNhanPanel extends JPanel {
     public ThongTinCaNhanPanel() {
         setLayout(new BorderLayout());
-        setBackground(Color.WHITE); // Đảm bảo nền trắng
+        setBackground(Color.WHITE);
 
         JLabel title = new JLabel("Thông Tin Cá Nhân", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 20));
         add(title, BorderLayout.NORTH);
         
         JPanel mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBackground(Color.WHITE); // Đảm bảo nền trắng
+        mainPanel.setBackground(Color.WHITE);
 
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -89,11 +89,10 @@ public class ThongTinCaNhanPanel extends JPanel {
 
         JPanel btnPanel = new JPanel();
         btnPanel.setBackground(Color.WHITE);
-        JButton btnSave = new JButton("Save");
-        JButton btnCancel = new JButton("Cancel");
+        FadeButton btnSave = new FadeButton(new Color(230, 247, 230),new Color(0, 150, 136),new Color(0, 0, 0),"Cập Nhập Thông Tin");
         btnPanel.add(btnSave);
-        btnPanel.add(btnCancel);
 
         add(mainPanel, BorderLayout.CENTER);
+        add(btnPanel, BorderLayout.SOUTH);
     }
 }
