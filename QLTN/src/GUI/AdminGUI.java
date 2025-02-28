@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import Component.RoundedButton;
 
@@ -46,6 +47,11 @@ public class AdminGUI extends JFrame {
         jpn_login.setLayout(new GridBagLayout()); 
         jpn_login.setPreferredSize(new Dimension(400, 800));
         jpn_login.setBackground(new Color(253, 233, 226));
+        
+        // --- TẠO PANEL PHẢI ---
+        card = new CardLayout();
+        jpn_rightPanel = new JPanel(card);
+        jpn_rightPanel.setBackground(Color.WHITE);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -114,10 +120,32 @@ public class AdminGUI extends JFrame {
 				}
 			}
 		});
+        
+     // Thêm các panel vào card layout
+        jpn_rightPanel.add(new JLabel("<html><h1 style='color:blue;'>Xin chào Admin</h1></html>", SwingConstants.CENTER), "HOME");
+        jpn_rightPanel.add(new JLabel("User Management Panel"), "USER");
+        jpn_rightPanel.add(new JLabel("Question Management Panel"), "QUESTION");
+        jpn_rightPanel.add(new JLabel("Answer Management Panel"), "ANSWER");
+        jpn_rightPanel.add(new JLabel("Test Management Panel"), "TEST");
+        jpn_rightPanel.add(new JLabel("Result Management Panel"), "RESULT");
+        jpn_rightPanel.add(new JLabel("Exam Management Panel"), "EXAM");
+        jpn_rightPanel.add(new JLabel("Topic Management Panel"), "TOPIC");
+        jpn_rightPanel.add(new JLabel("Log Management Panel"), "LOG");
+
+        // --- SỰ KIỆN CHUYỂN PANEL ---
+        btn_user.addActionListener(e -> card.show(jpn_rightPanel, "USER"));
+        btn_question.addActionListener(e -> card.show(jpn_rightPanel, "QUESTION"));
+        btn_answer.addActionListener(e -> card.show(jpn_rightPanel, "ANSWER"));
+        btn_test.addActionListener(e -> card.show(jpn_rightPanel, "TEST"));
+        btn_result.addActionListener(e -> card.show(jpn_rightPanel, "RESULT"));
+        btn_exam.addActionListener(e -> card.show(jpn_rightPanel, "EXAM"));
+        btn_topic.addActionListener(e -> card.show(jpn_rightPanel, "TOPIC"));
+        btn_log.addActionListener(e -> card.show(jpn_rightPanel, "LOG"));
 
         // --- THÊM PANEL VÀO FRAME ---
         this.setLayout(new BorderLayout());
         this.add(jpn_login, BorderLayout.WEST);
+        this.add(jpn_rightPanel, BorderLayout.CENTER);
     }
 
     // --- HÀM TẠO NÚT ---
