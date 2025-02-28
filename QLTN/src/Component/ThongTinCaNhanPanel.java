@@ -1,12 +1,19 @@
 package Component;
 
 import javax.swing.*;
+
+import BLL.UserBLL;
+import DTO.UserDTO;
+
 import java.awt.*;
 import java.util.Calendar;
 import java.util.Date;
 
 public class ThongTinCaNhanPanel extends JPanel {
     public ThongTinCaNhanPanel() {
+    	UserBLL userBll = new UserBLL();
+    	UserDTO userDto = userBll.getUserByID(1);
+    	
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
 
@@ -30,68 +37,52 @@ public class ThongTinCaNhanPanel extends JPanel {
         gbc.fill = GridBagConstraints.BOTH; 
         avatarLabel.setOpaque(true);
         avatarLabel.setBackground(new Color(230, 247, 230));
-        avatarLabel.setPreferredSize(new Dimension(150, 150));
+        avatarLabel.setPreferredSize(new Dimension(100, 100));
 
         mainPanel.add(avatarLabel, gbc);
-
+        
+        Font labelFont = new Font("Arial", Font.PLAIN, 18);
+        Font fieldFont = new Font("Arial", Font.PLAIN, 16);
+        
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.gridheight = 1;
         gbc.anchor = GridBagConstraints.WEST;
-        mainPanel.add(new JLabel("Name"), gbc);
+        JLabel userLabel = new JLabel("User Name");
+        userLabel.setFont(labelFont);
+        mainPanel.add(userLabel, gbc);
 
         gbc.gridx = 2;
-        JTextField nameField = new JTextField("name");
-        mainPanel.add(nameField, gbc);
+        JLabel nameValueLabel = new JLabel(userDto.getUserName());
+        nameValueLabel.setFont(fieldFont);
+        nameValueLabel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        nameValueLabel.setOpaque(true);
+        nameValueLabel.setBackground(Color.WHITE);
+        nameValueLabel.setPreferredSize(new Dimension(200, 30));
+        mainPanel.add(nameValueLabel, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        mainPanel.add(new JLabel("Email"), gbc);
-
+        JLabel emailLabel = new JLabel("Full Name");
+        emailLabel.setFont(labelFont);
+        mainPanel.add(emailLabel, gbc);
+        
         gbc.gridx = 2;
-        JTextField emailField = new JTextField("email");
+        JTextField emailField = new JTextField(userDto.getUserEmail());
+        emailField.setFont(fieldFont);
         mainPanel.add(emailField, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 2;
-        mainPanel.add(new JLabel("Gender"), gbc);
-
+        JLabel usernameLabel = new JLabel("Email Address");
+        usernameLabel.setFont(labelFont);
+        mainPanel.add(usernameLabel, gbc);
+        
         gbc.gridx = 2;
-        JRadioButton male = new JRadioButton("Male");
-        JRadioButton female = new JRadioButton("Female");
-        male.setBackground(Color.WHITE);
-        female.setBackground(Color.WHITE);
-        ButtonGroup genderGroup = new ButtonGroup();
-        genderGroup.add(male);
-        genderGroup.add(female);
-        JPanel genderPanel = new JPanel();
-        genderPanel.setBackground(Color.WHITE);
-        genderPanel.add(male);
-        genderPanel.add(female);
-        mainPanel.add(genderPanel, gbc);
-
-        gbc.gridy = 6; gbc.gridx = 1;
-        mainPanel.add(new JLabel("Phone"), gbc);
-        gbc.gridx = 2;
-        mainPanel.add(new JLabel("Birthday"), gbc);
-
-        gbc.gridy = 7; gbc.gridx = 1;
-        JTextField txtPhone = new JTextField("0819515456");
-        mainPanel.add(txtPhone, gbc);
-
-        gbc.gridx = 2;
-        SpinnerDateModel model = new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH);
-        JSpinner jspBirthday = new JSpinner(model);
-        JSpinner.DateEditor editor = new JSpinner.DateEditor(jspBirthday, "dd/MM/yyyy");
-        jspBirthday.setEditor(editor);        
-        mainPanel.add(jspBirthday, gbc);
-
-        gbc.gridy = 8; gbc.gridx = 1;
-        mainPanel.add(new JLabel("Address"), gbc);
-        gbc.gridy = 9; gbc.gridwidth = 2;
-        JTextField txtAddress = new JTextField("Quảng Bình");
-        mainPanel.add(txtAddress, gbc);
-
+        JTextField userField = new JTextField(userDto.getUserEmail());
+        userField.setFont(fieldFont);
+        mainPanel.add(userField, gbc);
+       
         JPanel btnPanel = new JPanel();
         btnPanel.setBackground(Color.WHITE);
         FadeButton btnSave = new FadeButton(new Color(230, 247, 230),new Color(0, 150, 136),new Color(0, 0, 0),"Cập Nhập Thông Tin");
