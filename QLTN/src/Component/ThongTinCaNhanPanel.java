@@ -2,6 +2,8 @@ package Component;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Calendar;
+import java.util.Date;
 
 public class ThongTinCaNhanPanel extends JPanel {
     public ThongTinCaNhanPanel() {
@@ -78,8 +80,11 @@ public class ThongTinCaNhanPanel extends JPanel {
         mainPanel.add(txtPhone, gbc);
 
         gbc.gridx = 2;
-        JTextField txtBirthday = new JTextField("08-02-1998");
-        mainPanel.add(txtBirthday, gbc);
+        SpinnerDateModel model = new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH);
+        JSpinner jspBirthday = new JSpinner(model);
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(jspBirthday, "dd/MM/yyyy");
+        jspBirthday.setEditor(editor);        
+        mainPanel.add(jspBirthday, gbc);
 
         gbc.gridy = 8; gbc.gridx = 1;
         mainPanel.add(new JLabel("Address"), gbc);
