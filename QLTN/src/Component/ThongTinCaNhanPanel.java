@@ -6,60 +6,94 @@ import java.awt.*;
 public class ThongTinCaNhanPanel extends JPanel {
     public ThongTinCaNhanPanel() {
         setLayout(new BorderLayout());
+        setBackground(Color.WHITE); // Đảm bảo nền trắng
 
-        JLabel title = new JLabel("LEA / UPDATE INFO", SwingConstants.CENTER);
+        JLabel title = new JLabel("Thông Tin Cá Nhân", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 20));
         add(title, BorderLayout.NORTH);
+        
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        mainPanel.setBackground(Color.WHITE); // Đảm bảo nền trắng
 
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(3, 2, 10, 10));
+        GridBagConstraints gbc = new GridBagConstraints();
 
-        JLabel avatar = new JLabel(new ImageIcon("avatar.png"));
-        JButton btnUpdateAvatar = new JButton("Update");
+        ImageIcon avatar = new ImageIcon("src/image/icons/user.png");
+        JLabel avatarLabel = new JLabel(new ImageIcon(avatar.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridheight = GridBagConstraints.REMAINDER;
+        gbc.gridwidth = 1; 
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.anchor = GridBagConstraints.CENTER; 
+        gbc.fill = GridBagConstraints.BOTH; 
+        avatarLabel.setOpaque(true);
+        avatarLabel.setBackground(new Color(230, 247, 230));
+        avatarLabel.setPreferredSize(new Dimension(150, 150));
 
-        JLabel lblName = new JLabel("Name:");
-        JTextField txtName = new JTextField("Nguyễn Văn Linh");
+        mainPanel.add(avatarLabel, gbc);
 
-        JLabel lblEmail = new JLabel("Email:");
-        JTextField txtEmail = new JTextField("linhnxpd05401@gmail.com");
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.gridheight = 1;
+        gbc.anchor = GridBagConstraints.WEST;
+        mainPanel.add(new JLabel("Name"), gbc);
 
-        JLabel lblGender = new JLabel("Gender:");
-        JRadioButton male = new JRadioButton("Male", true);
+        gbc.gridx = 2;
+        JTextField nameField = new JTextField("name");
+        mainPanel.add(nameField, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        mainPanel.add(new JLabel("Email"), gbc);
+
+        gbc.gridx = 2;
+        JTextField emailField = new JTextField("email");
+        mainPanel.add(emailField, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        mainPanel.add(new JLabel("Gender"), gbc);
+
+        gbc.gridx = 2;
+        JRadioButton male = new JRadioButton("Male");
         JRadioButton female = new JRadioButton("Female");
-
+        male.setBackground(Color.WHITE);
+        female.setBackground(Color.WHITE);
         ButtonGroup genderGroup = new ButtonGroup();
         genderGroup.add(male);
         genderGroup.add(female);
-
         JPanel genderPanel = new JPanel();
+        genderPanel.setBackground(Color.WHITE);
         genderPanel.add(male);
         genderPanel.add(female);
+        mainPanel.add(genderPanel, gbc);
 
-        JLabel lblPhone = new JLabel("Phone:");
+        gbc.gridy = 6; gbc.gridx = 1;
+        mainPanel.add(new JLabel("Phone"), gbc);
+        gbc.gridx = 2;
+        mainPanel.add(new JLabel("Birthday"), gbc);
+
+        gbc.gridy = 7; gbc.gridx = 1;
         JTextField txtPhone = new JTextField("0819515456");
+        mainPanel.add(txtPhone, gbc);
 
-        JLabel lblBirthday = new JLabel("Birthday:");
+        gbc.gridx = 2;
         JTextField txtBirthday = new JTextField("08-02-1998");
+        mainPanel.add(txtBirthday, gbc);
 
-        JLabel lblAddress = new JLabel("Address:");
+        gbc.gridy = 8; gbc.gridx = 1;
+        mainPanel.add(new JLabel("Address"), gbc);
+        gbc.gridy = 9; gbc.gridwidth = 2;
         JTextField txtAddress = new JTextField("Quảng Bình");
-
-        mainPanel.add(lblName); mainPanel.add(txtName);
-        mainPanel.add(lblEmail); mainPanel.add(txtEmail);
-        mainPanel.add(lblGender); mainPanel.add(genderPanel);
-        mainPanel.add(lblPhone); mainPanel.add(txtPhone);
-        mainPanel.add(lblBirthday); mainPanel.add(txtBirthday);
-        mainPanel.add(lblAddress); mainPanel.add(txtAddress);
-
-        add(mainPanel, BorderLayout.CENTER);
+        mainPanel.add(txtAddress, gbc);
 
         JPanel btnPanel = new JPanel();
+        btnPanel.setBackground(Color.WHITE);
         JButton btnSave = new JButton("Save");
         JButton btnCancel = new JButton("Cancel");
-
         btnPanel.add(btnSave);
         btnPanel.add(btnCancel);
 
-        add(btnPanel, BorderLayout.SOUTH);
+        add(mainPanel, BorderLayout.CENTER);
     }
 }

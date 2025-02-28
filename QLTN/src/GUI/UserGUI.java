@@ -42,11 +42,9 @@ public class UserGUI extends JFrame {
 
         contentPanel = new JPanel(new BorderLayout());
         contentPanel.setBackground(Color.WHITE);
-
         JLabel contentLabel = new JLabel("Welcome", SwingConstants.CENTER);
         contentLabel.setFont(new Font("Arial", Font.BOLD, 24));
         contentPanel.add(contentLabel, BorderLayout.CENTER);
-
         add(sidebar, BorderLayout.WEST);
         add(contentPanel, BorderLayout.CENTER);
     }
