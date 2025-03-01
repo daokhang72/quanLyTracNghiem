@@ -79,15 +79,14 @@ public class QuanLyUserPanel extends JPanel {
     	loadUserTable();
     }
     private void userAdd() {
-//    	int index = userTable.getSelectedRow();
-//    	FormAddUser formuser = new FormAddUser();
-//    	formuser.setLocationRelativeTo(this);
-//    	formuser.addWindowListener(new java.awt.event.WindowAdapter() {
-//            @Override
-//            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-//            	loadUserTable();
-//            }
-//        });
+    	FormAddUser formuser = new FormAddUser();
+    	formuser.setLocationRelativeTo(this);
+    	formuser.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+            	loadUserTable();
+            }
+        });
 
     }
 }
