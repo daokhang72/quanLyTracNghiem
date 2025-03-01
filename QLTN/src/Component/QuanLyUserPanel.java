@@ -47,7 +47,13 @@ public class QuanLyUserPanel extends JPanel {
       	  public void actionPerformed(ActionEvent e) { 
       		userAdd();
       	  } 
-      	} 
+      	});
+        
+        btnEdit.addActionListener(new ActionListener() { 
+        	  public void actionPerformed(ActionEvent e) { 
+        		userEdit();
+        	  } 
+        	}
       );
 
     }
@@ -87,6 +93,27 @@ public class QuanLyUserPanel extends JPanel {
             	loadUserTable();
             }
         });
+
+    }
+    private void userEdit() {
+    	int selectedRow = userTable.getSelectedRow();
+    	if (selectedRow != -1) {
+    	    String userId = userTable.getValueAt(selectedRow, 0).toString();
+    	    String username = userTable.getValueAt(selectedRow, 1).toString();
+    	    String email = userTable.getValueAt(selectedRow, 2).toString();
+    	    String fullName = userTable.getValueAt(selectedRow, 3).toString();
+    	    
+    	    FormEditUser formuser = new FormEditUser();
+    	    formuser.setUserData(userId, username, email,fullName);
+    	    formuser.setLocationRelativeTo(this);    	
+    	
+	    	formuser.addWindowListener(new java.awt.event.WindowAdapter() {
+	            @Override
+	            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+	            	loadUserTable();
+	            }
+	        });
+    	}
 
     }
 }
