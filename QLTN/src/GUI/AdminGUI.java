@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import Component.QuanLyUserPanel;
 import Component.RoundedButton;
 
 public class AdminGUI extends JFrame {
@@ -60,7 +61,7 @@ public class AdminGUI extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // --- LOGO ---
-        img_logo = new ImageIcon("C:\\Users\\Admin\\git\\repository\\QLTN\\src\\image\\flower.png");
+        img_logo = new ImageIcon("src\\image\\flower.png");
         Image scaledLogo = img_logo.getImage().getScaledInstance(170, 150, Image.SCALE_SMOOTH);
         img_logo = new ImageIcon(scaledLogo);
         jlb_logo = new JLabel(img_logo);
@@ -123,7 +124,7 @@ public class AdminGUI extends JFrame {
         
      // Thêm các panel vào card layout
         jpn_rightPanel.add(new JLabel("<html><h1 style='color:blue;'>Xin chào Admin</h1></html>", SwingConstants.CENTER), "HOME");
-        jpn_rightPanel.add(new JLabel("User Management Panel"), "USER");
+        jpn_rightPanel.add(new QuanLyUserPanel(), "USER");
         jpn_rightPanel.add(new JLabel("Question Management Panel"), "QUESTION");
         jpn_rightPanel.add(new JLabel("Answer Management Panel"), "ANSWER");
         jpn_rightPanel.add(new JLabel("Test Management Panel"), "TEST");
