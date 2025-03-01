@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import Component.QuanLyAnswerPanel;
 import Component.QuanLyUserPanel;
 import Component.RoundedButton;
 
@@ -126,7 +127,7 @@ public class AdminGUI extends JFrame {
         jpn_rightPanel.add(new JLabel("<html><h1 style='color:blue;'>Xin chào Admin</h1></html>", SwingConstants.CENTER), "HOME");
         jpn_rightPanel.add(new QuanLyUserPanel(), "USER");
         jpn_rightPanel.add(new JLabel("Question Management Panel"), "QUESTION");
-        jpn_rightPanel.add(new JLabel("Answer Management Panel"), "ANSWER");
+        jpn_rightPanel.add(new QuanLyAnswerPanel(), "ANSWER");
         jpn_rightPanel.add(new JLabel("Test Management Panel"), "TEST");
         jpn_rightPanel.add(new JLabel("Result Management Panel"), "RESULT");
         jpn_rightPanel.add(new JLabel("Exam Management Panel"), "EXAM");

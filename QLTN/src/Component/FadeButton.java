@@ -24,7 +24,7 @@ public class FadeButton extends JButton {
         Dimension dimension = getPreferredSize();
         int w = (int) dimension.getWidth() + paddingWidth * 3;
         int h = (int) dimension.getHeight() + paddingHeight * 3;
-
+ 
         setPreferredSize(new Dimension(w, h));
         setOpaque(false);
         setBorder(null);

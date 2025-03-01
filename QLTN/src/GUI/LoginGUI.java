@@ -48,7 +48,7 @@ public class LoginGUI extends JFrame {
         jpn_login.setBackground(new Color(253, 233, 226));
 
         
-        img_logo = new ImageIcon("C:\\Users\\Admin\\git\\repository\\QLTN\\src\\image\\flower.png");
+        img_logo = new ImageIcon("src\\image\\flower.png");
         Image scaledLogo = img_logo.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
         img_logo = new ImageIcon(scaledLogo);
 
@@ -112,7 +112,7 @@ public class LoginGUI extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon imageIcon = new ImageIcon("D:\\HinhAnhDoAn\\study2.png"); 
+                ImageIcon imageIcon = new ImageIcon("src//image//study2.png"); 
                 g.drawImage(imageIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };

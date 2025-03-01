@@ -1,5 +1,6 @@
 package BLL;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import DAL.AnswersDAL;
@@ -42,4 +43,8 @@ public class AnswerBLL {
 		}
 		return dalanswer.deleteAnswer(awID);
 	}
+	public AnswerDTO getAnswerByID(int awID) {
+	    return dalanswer.getAnswerByID(awID);
+	}
+
 }

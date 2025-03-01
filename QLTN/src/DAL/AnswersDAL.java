@@ -51,7 +51,7 @@ public class AnswersDAL {
                     rs.getInt("qID"),
                     rs.getString("awContent"),
                     rs.getString("awPictures"),
-                    rs.getBoolean("isRight"), 
+                    rs.getBoolean("isRight"),
                     rs.getInt("awStatus")
                 );
                 answers.add(answer);
@@ -115,18 +115,39 @@ public class AnswersDAL {
     }
     // xác định đáp án đúng
     public String getRightAnswer(int qid) {
-        String sql = "SELECT awcontent FROM answers WHERE qid = ? AND isRight = 1"; // Lấy nội dung đáp án đúng
+        String sql = "SELECT awcontent FROM answers WHERE qid = ? AND isRight = 1"; 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, qid);  // Gán ID câu hỏi
+            ps.setInt(1, qid);  
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return rs.getString("awcontent"); // Trả về nội dung đáp án đúng
+                return rs.getString("awcontent");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null; // Nếu không có đáp án đúng, trả về null
+        return null; 
+    }
+    public AnswerDTO getAnswerByID(int awID) {
+        String query = "SELECT * FROM Answers WHERE awID = ?";
+        try (
+             PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setInt(1, awID);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new AnswerDTO(
+                    rs.getInt("awID"),
+                    rs.getInt("qID"),
+                    rs.getString("awContent"),
+                    rs.getString("awPictures"),
+                    rs.getBoolean("isRight"),
+                    rs.getInt("awStatus")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
