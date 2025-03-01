@@ -8,6 +8,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -17,10 +19,19 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import BLL.UserBLL;
+import DTO.UserDTO;
+
 
 public class FormAddUser extends JFrame{
-	public FormAddUser() {
 	
+	JTextField nameValueLabel;
+	JTextField emailField;
+	JTextField userPasswordField;
+	JTextField fullNameField;
+	UserBLL userBll;
+	public FormAddUser() {
+		userBll = new UserBLL();
 		setSize(500, 500);
     	setBackground(Color.WHITE);
     	setVisible(true);
@@ -45,7 +56,7 @@ public class FormAddUser extends JFrame{
         mainPanel.add(userLabel, gbc);
 
         gbc.gridx = 2;
-        JTextField nameValueLabel = new JTextField("", 15);
+        nameValueLabel = new JTextField("", 15);
         nameValueLabel.setFont(fieldFont);
         mainPanel.add(nameValueLabel, gbc);
 
@@ -56,7 +67,7 @@ public class FormAddUser extends JFrame{
         mainPanel.add(emailLabel, gbc);
         
         gbc.gridx = 2;
-        JTextField emailField = new JTextField("", 15);
+        emailField = new JTextField("", 15);
         emailField.setFont(fieldFont);
         mainPanel.add(emailField, gbc);
 
@@ -67,9 +78,9 @@ public class FormAddUser extends JFrame{
         mainPanel.add(usernameLabel, gbc);
         
         gbc.gridx = 2;
-        JTextField userField = new JTextField("", 15);
-        userField.setFont(fieldFont);
-        mainPanel.add(userField, gbc);
+        userPasswordField = new JTextField("", 15);
+        userPasswordField.setFont(fieldFont);
+        mainPanel.add(userPasswordField, gbc);
        
         gbc.gridx = 1;
         gbc.gridy = 3;
@@ -78,7 +89,7 @@ public class FormAddUser extends JFrame{
         mainPanel.add(fullNameLabel, gbc);
         
         gbc.gridx = 2;
-        JTextField fullNameField = new JTextField("", 15);
+        fullNameField = new JTextField("", 15);
         fullNameField.setFont(fieldFont);
         mainPanel.add(fullNameField, gbc);
         
@@ -89,5 +100,19 @@ public class FormAddUser extends JFrame{
 
         add(mainPanel, BorderLayout.CENTER);
         add(btnPanel, BorderLayout.SOUTH);
+        
+        btnSave.addActionListener(new ActionListener() { 
+    	  public void actionPerformed(ActionEvent e) { 
+    		  String username = nameValueLabel.getText();
+    		  String email = emailField.getText();
+    		  String password = userPasswordField.getText();
+    		  String fullName = fullNameField.getText();
+    		  
+    		  UserDTO user = new UserDTO(5,username,email,password,fullName,false);
+    		  userBll.addUser(user);
+    		  dispose();
+    	  } 
+    	});
+    
 	}
 }
