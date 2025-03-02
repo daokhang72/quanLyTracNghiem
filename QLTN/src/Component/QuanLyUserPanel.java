@@ -8,6 +8,7 @@ import DTO.UserDTO;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -85,8 +86,14 @@ public class QuanLyUserPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "Vui Lòng Chọn User cần xóa", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-    	
-    	userBll.deleteUser(Integer.parseInt(userTable.getValueAt(selectedRow, 0).toString()));
+    	try
+    	{
+    		userBll.deleteUser(Integer.parseInt(userTable.getValueAt(selectedRow, 0).toString()));
+    	}
+    		
+    	catch(Exception e) {
+			  JOptionPane.showMessageDialog(this, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+    	}
     	loadUserTable();
     	
     }
