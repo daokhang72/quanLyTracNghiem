@@ -15,6 +15,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -102,16 +103,32 @@ public class FormAddUser extends JFrame{
         add(btnPanel, BorderLayout.SOUTH);
         
         btnSave.addActionListener(new ActionListener() { 
-    	  public void actionPerformed(ActionEvent e) { 
-    		  String username = nameValueLabel.getText();
-    		  String email = emailField.getText();
-    		  String password = userPasswordField.getText();
-    		  String fullName = fullNameField.getText();
-    		  
-    		  UserDTO user = new UserDTO(5,username,email,password,fullName,false);
-    		  userBll.addUser(user);
-    		  dispose();
-    	  } 
+    	  public void actionPerformed(ActionEvent e) {
+	    		  if (nameValueLabel.getText().toString()==null || nameValueLabel.getText().toString().length() ==0) {
+					  JOptionPane.showMessageDialog(mainPanel, "Vui Lòng Nhập UserName", "Lỗi", JOptionPane.ERROR_MESSAGE);
+					  return;
+	    		  }
+	    		  if (emailField.getText().toString()==null || emailField.getText().toString().length() ==0) {
+					  JOptionPane.showMessageDialog(mainPanel, "Vui Lòng Nhập Email", "Lỗi", JOptionPane.ERROR_MESSAGE);
+					  return;
+	    		  }
+	    		  if (userPasswordField.getText().toString()==null || userPasswordField.getText().toString().length() ==0) {
+					  JOptionPane.showMessageDialog(mainPanel, "Vui Lòng Nhập PassWord", "Lỗi", JOptionPane.ERROR_MESSAGE);
+					  return;
+	    		  }
+	    		  if (fullNameField.getText().toString()==null || fullNameField.getText().toString().length() ==0) {
+					  JOptionPane.showMessageDialog(mainPanel, "Vui Lòng Nhập Name", "Lỗi", JOptionPane.ERROR_MESSAGE);
+					  return;
+	    		  }
+				  String username = nameValueLabel.getText();
+				  String email = emailField.getText();
+				  String password = userPasswordField.getText();
+				  String fullName = fullNameField.getText();
+				  
+				  UserDTO user = new UserDTO(5,username,email,password,fullName,false);
+				  userBll.addUser(user);
+				  dispose();
+			  } 
     	});
     
 	}
