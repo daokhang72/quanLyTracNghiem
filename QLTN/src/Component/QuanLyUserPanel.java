@@ -8,6 +8,7 @@ import DTO.UserDTO;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -47,7 +48,13 @@ public class QuanLyUserPanel extends JPanel {
       	  public void actionPerformed(ActionEvent e) { 
       		userAdd();
       	  } 
-      	} 
+      	});
+        
+        btnEdit.addActionListener(new ActionListener() { 
+        	  public void actionPerformed(ActionEvent e) { 
+        		userEdit();
+        	  } 
+        	}
       );
 
     }
@@ -74,20 +81,58 @@ public class QuanLyUserPanel extends JPanel {
     	
     }
     private void userDelete() {
-    	int index = userTable.getSelectedRow();
-    	userBll.deleteUser(Integer.parseInt(userTable.getValueAt(index, 0).toString()));
+    	int selectedRow = userTable.getSelectedRow();
+    	if (selectedRow==-1) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn User cần xóa", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    	try
+    	{
+    		userBll.deleteUser(Integer.parseInt(userTable.getValueAt(selectedRow, 0).toString()));
+    	}
+    		
+    	catch(Exception e) {
+			  JOptionPane.showMessageDialog(this, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+    	}
     	loadUserTable();
+    	
     }
     private void userAdd() {
-//    	int index = userTable.getSelectedRow();
-//    	FormAddUser formuser = new FormAddUser();
-//    	formuser.setLocationRelativeTo(this);
-//    	formuser.addWindowListener(new java.awt.event.WindowAdapter() {
-//            @Override
-//            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-//            	loadUserTable();
-//            }
-//        });
+    	FormAddUser formuser = new FormAddUser();
+    	formuser.setLocationRelativeTo(this);
+    	formuser.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+            	loadUserTable();
+            }
+        });
+
+    }
+    private void userEdit() {
+    	int selectedRow = userTable.getSelectedRow();
+    	
+    	if (selectedRow==-1) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn User cần sửa", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    	
+	    String userId = userTable.getValueAt(selectedRow, 0).toString();
+	    String username = userTable.getValueAt(selectedRow, 1).toString();
+	    String email = userTable.getValueAt(selectedRow, 2).toString();
+	    String passwrod = userTable.getValueAt(selectedRow, 3).toString();
+	    String fullName = userTable.getValueAt(selectedRow, 4).toString();
+	    
+	    FormEditUser formuser = new FormEditUser();
+	    formuser.setUserData(Integer.parseInt(userId),username,  email, passwrod,fullName);
+	    formuser.setLocationRelativeTo(this);    	
+	
+		formuser.addWindowListener(new java.awt.event.WindowAdapter() {
+	        @Override
+	        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+	        	loadUserTable();
+	        }
+	    });
+    	
 
     }
 }

@@ -1,5 +1,6 @@
 package BLL;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import DAL.UsersDAL;
@@ -28,7 +29,7 @@ public class UserBLL {
 		return daluser.updateUser(u);
 	}
 	//xoa nguoi dung theo id
-	public boolean deleteUser(int userID) {
+	public boolean deleteUser(int userID) throws IOException {
 		return daluser.deleteUser(userID);
 	}
 	//kiem tra dang nhap

@@ -1,5 +1,6 @@
 package DAL;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -57,13 +58,17 @@ public class UsersDAL {
         return false;
     }
     // Xóa người dùng theo ID
-    public boolean deleteUser(int userID) {
+    public boolean deleteUser(int userID) throws IOException {
         String sql = "DELETE FROM users WHERE userID = ?";
         try (PreparedStatement st = con.prepareStatement(sql)) {
             st.setInt(1, userID);
             return st.executeUpdate() > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+        	if (e instanceof SQLException sqlEx) {
+                if (sqlEx.getSQLState().startsWith("23")) {
+                    throw new IOException("Không thể xóa! Người dùng này đang liên kết với dữ liệu khác.");
+                }
+            }
         }
         return false;
     }
