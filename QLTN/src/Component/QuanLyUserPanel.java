@@ -119,10 +119,11 @@ public class QuanLyUserPanel extends JPanel {
 	    String userId = userTable.getValueAt(selectedRow, 0).toString();
 	    String username = userTable.getValueAt(selectedRow, 1).toString();
 	    String email = userTable.getValueAt(selectedRow, 2).toString();
-	    String fullName = userTable.getValueAt(selectedRow, 3).toString();
+	    String passwrod = userTable.getValueAt(selectedRow, 3).toString();
+	    String fullName = userTable.getValueAt(selectedRow, 4).toString();
 	    
 	    FormEditUser formuser = new FormEditUser();
-	    formuser.setUserData(userId, username, email,fullName);
+	    formuser.setUserData(Integer.parseInt(userId),username,  email, passwrod,fullName);
 	    formuser.setLocationRelativeTo(this);    	
 	
 		formuser.addWindowListener(new java.awt.event.WindowAdapter() {

@@ -125,7 +125,7 @@ public class FormAddUser extends JFrame{
 				  String password = userPasswordField.getText();
 				  String fullName = fullNameField.getText();
 				  
-				  UserDTO user = new UserDTO(5,username,email,password,fullName,false);
+				  UserDTO user = new UserDTO(0,username,email,password,fullName,false);
 				  userBll.addUser(user);
 				  dispose();
 			  } 

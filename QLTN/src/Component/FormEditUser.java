@@ -25,7 +25,7 @@ import DTO.UserDTO;
 
 
 public class FormEditUser extends JFrame{
-	
+	int  userId;
 	JTextField nameValueLabel;
 	JTextField emailField;
 	JTextField userPasswordField;
@@ -37,7 +37,7 @@ public class FormEditUser extends JFrame{
     	setBackground(Color.WHITE);
     	setVisible(true);
     	
-    	JLabel title = new JLabel("Thêm User", SwingConstants.CENTER);
+    	JLabel title = new JLabel("Cập Nhập User", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 20));
         add(title, BorderLayout.NORTH);
         
@@ -126,18 +126,19 @@ public class FormEditUser extends JFrame{
     		  String password = userPasswordField.getText();
     		  String fullName = fullNameField.getText();
     		  
-    		  UserDTO user = new UserDTO(5,username,email,password,fullName,false);
-    		  userBll.addUser(user);
+    		  UserDTO user = new UserDTO(userId,username,email,password,fullName,false);
+    		  userBll.updateUser(user);
     		  dispose();
     	  } 
     	});
     
 	}
 	
-	public void setUserData(String userId, String username, String email,String fullName) {
-		nameValueLabel.setText(userId);
-		emailField.setText(username);
-		userPasswordField.setText(email);
+	public void setUserData(int userId, String username, String email, String password,String fullName) {
+		this.userId = userId;
+		nameValueLabel.setText(username);
+		emailField.setText(email);
+		userPasswordField.setText(password);
 		fullNameField.setText(fullName);
     }
 }
