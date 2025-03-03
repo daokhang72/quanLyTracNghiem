@@ -99,7 +99,7 @@ public class AnswersDAL {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
-        }
+        } 
     }
     
  // Xóa câu trả lời theo ID

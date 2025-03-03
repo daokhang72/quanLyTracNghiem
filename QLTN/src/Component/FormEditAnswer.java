@@ -19,6 +19,7 @@ import DTO.AnswerDTO;
 public class FormEditAnswer extends JDialog {
     private JTextField txtContent;
     private JTextField txtPictures;
+    private JTextField txtStatus;
     private JCheckBox chkIsRight;
     private JButton btnSave, btnCancel;
     private AnswerBLL answerBLL;
@@ -30,7 +31,7 @@ public class FormEditAnswer extends JDialog {
 
         setTitle("Chỉnh sửa đáp án");
         setSize(400, 250);
-        setLayout(new GridLayout(4, 2, 10, 10));
+        setLayout(new GridLayout(5, 2, 10, 10));
         setModal(true);
 
         // Lấy dữ liệu đáp án hiện tại
@@ -54,6 +55,10 @@ public class FormEditAnswer extends JDialog {
         chkIsRight = new JCheckBox();
         chkIsRight.setSelected(answer.isRight());
         add(chkIsRight);
+        
+        add(new JLabel("Trạng thái hoạt động:"));
+        txtStatus = new JTextField(String.valueOf(answer.getAwStatus()));
+        add(txtStatus);
 
         // Nút lưu và hủy
         btnSave = new JButton("Lưu");
@@ -74,13 +79,14 @@ public class FormEditAnswer extends JDialog {
         String content = txtContent.getText().trim();
         String pictures = txtPictures.getText().trim();
         boolean isRight = chkIsRight.isSelected();
+        int status = Integer.parseInt(txtStatus.getText().trim());
 
         if (content.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nội dung không được để trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        AnswerDTO updatedAnswer = new AnswerDTO(awID, 0, content, pictures, isRight, 1);
+        AnswerDTO updatedAnswer = new AnswerDTO(awID, 0, content, pictures, isRight, status);
         if (answerBLL.updateAnser(updatedAnswer)) {
             JOptionPane.showMessageDialog(this, "Cập nhật thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             dispose();

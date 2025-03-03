@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import Component.QuanLyAnswerPanel;
+import Component.QuanLyTopicPanel;
 import Component.QuanLyUserPanel;
 import Component.RoundedButton;
 
@@ -131,7 +132,7 @@ public class AdminGUI extends JFrame {
         jpn_rightPanel.add(new JLabel("Test Management Panel"), "TEST");
         jpn_rightPanel.add(new JLabel("Result Management Panel"), "RESULT");
         jpn_rightPanel.add(new JLabel("Exam Management Panel"), "EXAM");
-        jpn_rightPanel.add(new JLabel("Topic Management Panel"), "TOPIC");
+        jpn_rightPanel.add(new QuanLyTopicPanel(),"TOPIC");
         jpn_rightPanel.add(new JLabel("Log Management Panel"), "LOG");
 
         // --- SỰ KIỆN CHUYỂN PANEL ---
