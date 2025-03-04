@@ -37,7 +37,7 @@ public class QuanLyUserPanel extends JPanel {
     	add(title, BorderLayout.NORTH);
         add(new JScrollPane(userTable), BorderLayout.CENTER);
         add(btnPanel, BorderLayout.SOUTH);
-        
+         
         btnDelete.addActionListener(new ActionListener() { 
         	  public void actionPerformed(ActionEvent e) { 
         		  userDelete();
@@ -61,7 +61,7 @@ public class QuanLyUserPanel extends JPanel {
     private void loadUserTable() {
     	DefaultTableModel model = new DefaultTableModel();
     	userTable.setModel(model);    	 
-        String[] columnNames = { "userID", "userName", "userEmail", "userPassword", "userFullName" };
+        String[] columnNames = { "userID", "userName", "userEmail", "userPassword", "userFullName","isAdmin" };
     	ArrayList<UserDTO> arrListUser= new ArrayList<UserDTO>();
     	arrListUser = userBll.getAllUsers();
     	
@@ -75,7 +75,8 @@ public class QuanLyUserPanel extends JPanel {
     						arrListUser.get(i).getUserName(),
     						arrListUser.get(i).getUserEmail(),
     						arrListUser.get(i).getUserPassword(),
-    						arrListUser.get(i).getUserPassword(),
+    						arrListUser.get(i).getUserFullName(),
+    						arrListUser.get(i).isAdmin() ? 1 : 0
     						});
     	}
     	

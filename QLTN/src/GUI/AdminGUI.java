@@ -21,11 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import Component.QuanLyAnswerPanel;
-<<<<<<< HEAD
 import Component.QuanLyExam;
-=======
 import Component.QuanLyTopicPanel;
->>>>>>> 6580a4a0df04b1f7f3fd32d47530cd6b46dc9400
 import Component.QuanLyUserPanel;
 import Component.RoundedButton;
 
@@ -135,13 +132,10 @@ public class AdminGUI extends JFrame {
         jpn_rightPanel.add(new QuanLyAnswerPanel(), "ANSWER");
         jpn_rightPanel.add(new JLabel("Test Management Panel"), "TEST");
         jpn_rightPanel.add(new JLabel("Result Management Panel"), "RESULT");
-<<<<<<< HEAD
         jpn_rightPanel.add(new QuanLyExam(), "EXAM");
         jpn_rightPanel.add(new JLabel("Topic Management Panel"), "TOPIC");
-=======
         jpn_rightPanel.add(new JLabel("Exam Management Panel"), "EXAM");
         jpn_rightPanel.add(new QuanLyTopicPanel(),"TOPIC");
->>>>>>> 6580a4a0df04b1f7f3fd32d47530cd6b46dc9400
         jpn_rightPanel.add(new JLabel("Log Management Panel"), "LOG");
 
         // --- SỰ KIỆN CHUYỂN PANEL ---
