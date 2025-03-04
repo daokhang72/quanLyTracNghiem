@@ -35,7 +35,6 @@ public class ExamsDAL {
                 return count > 0;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         return false;
     }
@@ -53,7 +52,7 @@ public class ExamsDAL {
 					String newMa;
 					boolean flag = false;
 					while(!flag) {
-						newMa = String.format("EX%03", nextMa);
+						newMa = String.format("EX%03d", nextMa);
 						if(!kiemTraTonTai(newMa)) {
 							maxMa = newMa;
 							flag = true;
