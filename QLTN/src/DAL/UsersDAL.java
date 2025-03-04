@@ -114,7 +114,7 @@ public class UsersDAL {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); 
         }
         return null;
     }

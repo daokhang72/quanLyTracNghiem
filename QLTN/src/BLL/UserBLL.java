@@ -17,7 +17,7 @@ public class UserBLL {
 		return daluser.getAllUsers();
 	}
 	//lay thong tin nguoi dung theo ID
-	public UserDTO getUserByID(int userID) {
+	public UserDTO getUserByID(int userID) { 
 		return daluser.getUserByID(userID);
 	}
 	//them nguoi dung moi

@@ -13,7 +13,7 @@ public class UserDTO {
 		this.userName = userName;
 		this.userEmail = userEmail;
 		this.userPassword = userPassword;
-		this.userFullName = userFullName; 
+		this.userFullName = userFullName;  
 		this.isAdmin = isAdmin;
 	}
 	public int getUserID() {

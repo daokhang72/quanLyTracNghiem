@@ -6,6 +6,8 @@ import BLL.UserBLL;
 import DTO.UserDTO;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -58,7 +60,7 @@ public class ThongTinCaNhanPanel extends JPanel {
         mainPanel.add(userLabel, gbc);
 
         gbc.gridx = 2;
-        JLabel nameValueLabel = new JLabel(userDto.getUserName());
+        JTextField nameValueLabel = new JTextField(userDto.getUserName());
         nameValueLabel.setFont(fieldFont);
         nameValueLabel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         nameValueLabel.setOpaque(true);
@@ -73,7 +75,7 @@ public class ThongTinCaNhanPanel extends JPanel {
         mainPanel.add(emailLabel, gbc);
         
         gbc.gridx = 2;
-        JTextField emailField = new JTextField(userDto.getUserEmail());
+        JTextField emailField = new JTextField(userDto.getUserFullName());
         emailField.setFont(fieldFont);
         mainPanel.add(emailField, gbc);
 
@@ -92,6 +94,12 @@ public class ThongTinCaNhanPanel extends JPanel {
         btnPanel.setBackground(Color.WHITE);
         FadeButton btnSave = new FadeButton(new Color(230, 247, 230),new Color(0, 150, 136),new Color(0, 0, 0),"Cập Nhập Thông Tin");
         btnPanel.add(btnSave);
+//        btnSave.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				String 
+//			}
+//		});
 
         add(mainPanel, BorderLayout.CENTER);
         add(btnPanel, BorderLayout.SOUTH);
