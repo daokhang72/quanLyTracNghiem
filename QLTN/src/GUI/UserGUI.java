@@ -27,7 +27,7 @@ public class UserGUI extends JFrame {
         logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         JLabel subtitleLabel = new JLabel("NHÓM 00");
         subtitleLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        subtitleLabel.setForeground(Color.WHITE);
+        subtitleLabel.setForeground(Color.WHITE); 
         subtitleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         sidebar.add(logoLabel);
@@ -90,6 +90,7 @@ public class UserGUI extends JFrame {
 
     private void showContentPanel(String text) {
         contentPanel.removeAll();
+        LoginGUI login = new LoginGUI();
         switch (text) {
             case "Thông Tin Cá Nhân":
                 contentPanel.add(new ThongTinCaNhanPanel(), BorderLayout.CENTER);
@@ -100,6 +101,11 @@ public class UserGUI extends JFrame {
             case "Kiểm Tra":
                 contentPanel.add(new JLabel("Kiểm Tra Panel", SwingConstants.CENTER), BorderLayout.CENTER);
                 break;
+            case "Log out":
+                this.dispose(); 
+                login.setVisible(true); 
+                login.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                return;
             default:
                 contentPanel.add(new JLabel("Welcome", SwingConstants.CENTER), BorderLayout.CENTER);
                 break;

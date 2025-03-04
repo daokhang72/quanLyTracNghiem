@@ -24,7 +24,7 @@ public class UserBLL {
 	public boolean addUser(UserDTO u) {
 		return daluser.addUser(u);
 	}
-	//cap nhat thong tin nguoi dung
+	//cap nhat thong tin nguoi dung 
 	public boolean updateUser(UserDTO u) {
 		return daluser.updateUser(u);
 	}
@@ -43,5 +43,9 @@ public class UserBLL {
 	//kiem tra tòn tại
 	public boolean kiemTraTonTai(String username) {
 		return daluser.kiemTraTonTai(username);
+	}
+	//lay danh sach nguoi dung theo username
+	public UserDTO getUserByUserName(String username){
+		return daluser.getUserByUserName(username);
 	}
 }

@@ -22,6 +22,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import BLL.UserBLL;
+import Component.Session;
 import DTO.UserDTO;
 
 
@@ -142,8 +143,16 @@ public class LoginGUI extends JFrame {
 		                admingui.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		            } else { 
 		                UserGUI usergui = new UserGUI();
-		                usergui.setVisible(true);
-		                usergui.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		                UserDTO loggedInUser = userbll.getUserByUserName(username);
+		                if (loggedInUser != null && loggedInUser.getUserPassword().equals(pass)) {
+		                    Session.setCurrentUser(loggedInUser);
+		                    usergui.setVisible(true);
+		                    usergui.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		                    dispose();
+		                } else {
+		                    JOptionPane.showMessageDialog(null, "Username hoặc mật khẩu không đúng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+		                }
+		                
 		            }
 		            dispose(); 
 		        } else {
@@ -244,6 +253,7 @@ public class LoginGUI extends JFrame {
             g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, radius, radius);
         }
     }
+
     public static void main(String[] args) {
     	LoginGUI login =  new LoginGUI();
     	login.pack();

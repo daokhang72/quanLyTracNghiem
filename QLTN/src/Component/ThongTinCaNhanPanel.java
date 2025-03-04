@@ -12,7 +12,12 @@ import java.util.Date;
 public class ThongTinCaNhanPanel extends JPanel {
     public ThongTinCaNhanPanel() {
     	UserBLL userBll = new UserBLL();
-    	UserDTO userDto = userBll.getUserByID(1);
+    	UserDTO userDto = Session.getCurrentUser();
+    	if (userDto == null) {
+    	    JOptionPane.showMessageDialog(this, "Lỗi: Không tìm thấy thông tin người dùng!");
+    	    return;
+    	}
+
     	
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);

@@ -95,6 +95,29 @@ public class UsersDAL {
         }
         return null;
     }
+ // Lấy danh sách tất cả người dùng theo username
+ // Tìm người dùng theo ID
+    public UserDTO getUserByUserName(String username) {
+        String sql = "SELECT TOP 1 * FROM users WHERE userName = ?";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, username);
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    return new UserDTO(
+                        rs.getInt("userID"),
+                        rs.getString("userName"),
+                        rs.getString("userEmail"),
+                        rs.getString("userPassword"),
+                        rs.getString("userFullName"),
+                        rs.getBoolean("isAdmin")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     // Lấy danh sách tất cả người dùng
     public ArrayList<UserDTO> getAllUsers() {
