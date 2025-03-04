@@ -53,7 +53,7 @@ public class QuanLyAnswerPanel extends JPanel{
 	private void loadAnswerTable() {
 		DefaultTableModel model = new DefaultTableModel();
         answerTable.setModel(model);
-        String[] columnNames = { "Answer ID", "Question ID ", "Nội dung", "Hình ảnh", "IsRight" };
+        String[] columnNames = { "Answer ID", "Question ID ", "Nội dung", "Hình ảnh", "IsRight","Trạng thái" };
         model.setColumnIdentifiers(columnNames);
         
         ArrayList<AnswerDTO> list = answerbll.dsAnswer();

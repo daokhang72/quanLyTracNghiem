@@ -1,5 +1,6 @@
 package BLL;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import DAL.TopicsDAL;
@@ -36,5 +37,9 @@ public class TopicBLL {
 	// xóa chủ đề theo id
 	public boolean deleteTopic(int tpID) {
 		return daltopic.deleteTopic(tpID);
+	}
+	// tìm chủ đề theo từ khóa
+	public ArrayList<TopicDTO> searchTopic(String keyword){
+		return daltopic.searchTopic(keyword);
 	}
 }

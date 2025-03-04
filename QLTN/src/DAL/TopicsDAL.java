@@ -37,7 +37,7 @@ public class TopicsDAL {
 				return true;
 			}
 		} catch (Exception e) {
-			System.err.println(e);
+			System.err.println(e); 
 		}
 		return false;
 	}
@@ -70,7 +70,7 @@ public class TopicsDAL {
 			int n = ps.executeUpdate();
 			if(n > 0) {
 				return true;
-			}
+			} 
 		} catch (Exception e) {
 			System.err.println(e);
 		}
@@ -117,4 +117,33 @@ public class TopicsDAL {
         }
         return null;
     }
+	public ArrayList<TopicDTO> searchTopic(String keyword) {
+	    ArrayList<TopicDTO> topics = new ArrayList<>();
+	    String sql = "SELECT * FROM Topics WHERE tptitle LIKE ? OR tpparent = ?";
+
+	    try (PreparedStatement stmt = con.prepareStatement(sql)) {
+	        stmt.setString(1, "%" + keyword + "%"); 
+	        try {
+	            int parentID = Integer.parseInt(keyword);
+	            stmt.setInt(2, parentID);
+	        } catch (NumberFormatException e) {
+	            stmt.setInt(2, -1); 
+	        }
+
+	        ResultSet rs = stmt.executeQuery();
+	        while (rs.next()) {
+	            TopicDTO topic = new TopicDTO(
+	                rs.getInt("tpID"), 
+	                rs.getString("tpTitle"), 
+	                rs.getInt("tpParent"), 
+	                rs.getInt("tpStatus")
+	            );
+	            topics.add(topic);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return topics;
+	}
+
 }
