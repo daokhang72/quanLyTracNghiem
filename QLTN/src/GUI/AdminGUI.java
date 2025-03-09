@@ -26,13 +26,14 @@ import Component.QuanLyAnswerPanel;
 import Component.QuanLyExam;
 import Component.QuanLyTopicPanel;
 import Component.QuanLyUserPanel;
+import Component.QuestionManager;
 import Component.RoundedButton;
 
 public class AdminGUI extends JFrame {
     private JPanel jpn_login, jpn_rightPanel;
     private ImageIcon img_logo;
     private JLabel jlb_logo;
-    private JButton btn_user, btn_question, btn_answer, btn_test, btn_result, btn_exam, btn_topic, btn_log,btn_logout;
+    private JButton btn_user, btn_question, btn_answer, btn_result, btn_exam, btn_topic, btn_log,btn_logout;
     private CardLayout card;
 
     public AdminGUI() {
@@ -85,10 +86,7 @@ public class AdminGUI extends JFrame {
         btn_answer = createButton("Answer Management", f_button, btnColor);
         jpn_login.add(btn_answer, gbc);
 
-        gbc.gridy++;
-        btn_test = createButton("Test Management", f_button, btnColor);
-        jpn_login.add(btn_test, gbc);
-
+        
         gbc.gridy++;
         btn_result = createButton("Result Management", f_button, btnColor);
         jpn_login.add(btn_result, gbc);
@@ -130,9 +128,8 @@ public class AdminGUI extends JFrame {
      // Thêm các panel vào card layout
         jpn_rightPanel.add(new JLabel("<html><h1 style='color:blue;'>Xin chào Admin</h1></html>", SwingConstants.CENTER), "HOME");
         jpn_rightPanel.add(new QuanLyUserPanel(), "USER");
-        jpn_rightPanel.add(new MainFrame(), "QUESTION");
+        jpn_rightPanel.add(new QuestionManager(), "QUESTION");
         jpn_rightPanel.add(new QuanLyAnswerPanel(), "ANSWER");
-        jpn_rightPanel.add(new JLabel("Test Management Panel"), "TEST");
         jpn_rightPanel.add(new JLabel("Result Management Panel"), "RESULT");
         jpn_rightPanel.add(new QuanLyExam(), "EXAM");
         jpn_rightPanel.add(new JLabel("Topic Management Panel"), "TOPIC");
@@ -143,7 +140,6 @@ public class AdminGUI extends JFrame {
         btn_user.addActionListener(e -> card.show(jpn_rightPanel, "USER"));
         btn_question.addActionListener(e -> card.show(jpn_rightPanel, "QUESTION"));
         btn_answer.addActionListener(e -> card.show(jpn_rightPanel, "ANSWER"));
-        btn_test.addActionListener(e -> card.show(jpn_rightPanel, "TEST"));
         btn_result.addActionListener(e -> card.show(jpn_rightPanel, "RESULT"));
         btn_exam.addActionListener(e -> card.show(jpn_rightPanel, "EXAM"));
         btn_topic.addActionListener(e -> card.show(jpn_rightPanel, "TOPIC"));
