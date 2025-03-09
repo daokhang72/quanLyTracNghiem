@@ -3,14 +3,25 @@ package Component;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+
+import BLL.AnswerBLL;
 import BLL.ExamBLL;
+import BLL.QuestionBLL;
 import BLL.TestBLL;
 import BLL.TopicBLL;
+import DTO.AnswerDTO;
 import DTO.ExamDTO;
+import DTO.QuestionDTO;
 import DTO.TestDTO;
 import DTO.TopicDTO;
 import com.toedter.calendar.JDateChooser;
 import java.awt.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,12 +34,16 @@ public class QuanLyExam extends JPanel {
 	private JTextField txtExamCode, txtExamOrder;
 	private JComboBox cbxTopic;
 	JDateChooser dateChooser;
-
+	TestBLL testBll;
 	ExamBLL examBll;
-
+	QuestionBLL qsBll;
+	AnswerBLL awBll;
+	
 	public QuanLyExam() {
 		examBll = new ExamBLL();
-
+		testBll = new TestBLL();
+		qsBll = new QuestionBLL();
+		awBll = new AnswerBLL();
 		setLayout(new BorderLayout());
 
 		JLabel title = new JLabel("Quản Lý Exam", SwingConstants.CENTER);
@@ -134,7 +149,9 @@ public class QuanLyExam extends JPanel {
 				"Thêm");
 		FadeButton btnDeleteTest = new FadeButton(new Color(230, 247, 230), new Color(0, 150, 136), new Color(0, 0, 0),
 				"Xóa");
+		
 
+		
 		panelButtons.add(btnAddTest);
 		panelButtons.add(btnDeleteTest);
 		panelTestForm.add(panelButtons, gbc);
@@ -167,10 +184,13 @@ public class QuanLyExam extends JPanel {
 				"Thêm");
 		FadeButton btnDeleteExam = new FadeButton(new Color(230, 247, 230), new Color(0, 150, 136), new Color(0, 0, 0),
 				"Xóa");
-
+		FadeButton btnDocx = new FadeButton(new Color(230, 247, 230), new Color(0, 150, 136), new Color(0, 0, 0),
+				"xuất docx");
+		
 		panelButtonsExam.add(btnAddExam);
 		panelButtonsExam.add(btnDeleteExam);
-
+		panelButtonsExam.add(btnDocx);
+		
 		panelExamForm.add(panelButtonsExam, gbc2);
 
 		JPanel panelForms = new JPanel(new GridLayout(1, 2, 10, 10));
@@ -211,7 +231,6 @@ public class QuanLyExam extends JPanel {
 				return;
 			}
 
-			TestBLL testBll = new TestBLL();
 			boolean isSuccess = testBll.addTest(newTest);
 
 			if (isSuccess) {
@@ -235,7 +254,6 @@ public class QuanLyExam extends JPanel {
 			if (confirm == JOptionPane.YES_OPTION) {
 				int testID = (int) tableTest.getValueAt(selectedRow, 0);
 
-				TestBLL testBll = new TestBLL();
 				boolean isDeleted = testBll.deleteTest(testID);
 
 				if (isDeleted) {
@@ -245,6 +263,62 @@ public class QuanLyExam extends JPanel {
 					JOptionPane.showMessageDialog(null, "Xóa bài kiểm tra thất bại!");
 				}
 			}
+		});
+		
+		btnDocx.addActionListener(e -> {
+			int selectedRow = tableExam.getSelectedRow();
+			if (selectedRow == -1) {
+				JOptionPane.showMessageDialog(null, "Vui lòng chọn bài kiểm tra cần xuất!");
+				return;
+			}
+			
+			try (XWPFDocument document = new XWPFDocument()) {
+	            XWPFParagraph titleDocx = document.createParagraph();
+	            titleDocx.setAlignment(ParagraphAlignment.CENTER);
+	            XWPFRun titleRun = titleDocx.createRun();
+	            titleRun.setText("ĐỀ THI");
+	            titleRun.setBold(true);
+	            titleRun.setFontSize(20);
+	            
+	            int cauhoi =0;
+				String listQuestion = (String) tableExam.getValueAt(selectedRow, 3);
+				
+				
+				for(String id: listQuestion.split(",")) {
+					cauhoi = cauhoi+1;
+					QuestionDTO question = qsBll.getQuestionByID(Integer.parseInt(id));
+					if(question==null) {
+						JOptionPane.showMessageDialog(null, "Lỗi Câu Hỏi Không Tồn Tại!");
+						return ;
+					}
+					XWPFParagraph paraQuestion = document.createParagraph();
+	                XWPFRun runQuestion = paraQuestion.createRun();
+	                runQuestion.setText("Câu " + cauhoi + ": " + question.getQContent());
+	                runQuestion.setBold(true);
+	                runQuestion.addBreak();
+
+	                ArrayList<AnswerDTO> answers = awBll.dsIDAnswer(Integer.parseInt(id));
+	                if(answers==null) {
+						JOptionPane.showMessageDialog(null, "Lỗi Đáp Án");
+						return ;
+					}
+	                for (AnswerDTO answer : answers) {
+	                    XWPFParagraph paraAnswer = document.createParagraph();
+	                    XWPFRun runAnswer = paraAnswer.createRun();
+	                    runAnswer.setText("- " + answer.getAwContent());
+	                }
+				}
+				
+
+	            try (FileOutputStream out = new FileOutputStream("DeThi.docx")) {
+	                document.write(out);
+	                System.out.println("Đề thi đã được tạo thành công: DeThi.docx");
+	            }
+
+	        } catch (IOException e1) {
+	            System.err.println("Lỗi khi tạo file: " + e1.getMessage());
+	        }
+			JOptionPane.showMessageDialog(null, "Xuất bài kiểm tra thành công!");
 		});
 		loadTest();
 	}
@@ -280,7 +354,6 @@ public class QuanLyExam extends JPanel {
 		loadTopics();
 		modelTest.setRowCount(0);
 
-		TestBLL testBll = new TestBLL();
 		ArrayList<TestDTO> arrTestDto = testBll.getAllTest();
 
 		for (TestDTO test : arrTestDto) {
