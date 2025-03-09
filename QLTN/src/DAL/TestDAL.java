@@ -39,35 +39,44 @@ public class TestDAL {
         }
         return false;
     }
-	// tao ma test chua ton tai
+	// Tạo mã test chưa tồn tại
 	public String taoMaTest() {
-		String sql = "SELECT MAX(testCode) AS MaxMaTest FROM test";
-		try {
-			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery(sql);
-			String maxMa = "TST001";
-			if(rs.next()) {
-				String maxMaFromDB = rs.getString("MaxMaTest");
-				if(maxMaFromDB != null) {
-					int nextMa = Integer.parseInt(maxMaFromDB.substring(2)) + 1;
-					String newMa;
-					boolean flag = false;
-					while(!flag) {
-						newMa = String.format("TST%03", nextMa);
-						if(!kiemTraTonTai(newMa)) {
-							maxMa = newMa;
-							flag = true;
-						}
-						nextMa++;
-					}
-				}
-			}
-			return maxMa;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
+	    String sql = "SELECT TOP 1 testCode AS MaxMaTest FROM test ORDER BY testCode DESC";
+	    try {
+	        Statement st = conn.createStatement();
+	        ResultSet rs = st.executeQuery(sql);
+	        String maxMa = "TST001";
+	        if (rs.next()) {
+	            String maxMaFromDB = rs.getString("MaxMaTest");
+	            if (maxMaFromDB != null && !maxMaFromDB.isEmpty()) {
+	                String numericPart = maxMaFromDB.substring(3).trim();
+	                if (numericPart.matches("\\d+")) {
+	                    int nextMa = Integer.parseInt(numericPart) + 1;
+	                    String newMa;
+	                    boolean flag = false;
+	                    while (!flag) {
+	                        newMa = String.format("TST%03d", nextMa);  
+	                        System.out.println("Thử với mã mới: " + newMa);
+	                        if (!kiemTraTonTai(newMa)) {
+	                            maxMa = newMa;
+	                            flag = true;
+	                        }
+	                        nextMa++;
+	                    }
+	                }
+	            }
+	        }
+	        return maxMa;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } catch (NumberFormatException e) {
+	        System.err.println("Lỗi định dạng số: " + e.getMessage());
+	    }
+	    return null;
 	}
+
+
+
 	// Thêm một bài thi mới
     public boolean addTest(TestDTO test) {
     	String maTest = taoMaTest();

@@ -48,5 +48,9 @@ public class TopicDTO {
 		this.tpStatus = tpStatus;
 	}
 	
-	
+	@Override
+	public String toString() {
+	    return tpTitle;
+	}
+
 }
