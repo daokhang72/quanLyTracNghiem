@@ -20,6 +20,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import Component.LogManagement;
+import Component.MainFrame;
 import Component.QuanLyAnswerPanel;
 import Component.QuanLyExam;
 import Component.QuanLyTopicPanel;
@@ -128,7 +130,7 @@ public class AdminGUI extends JFrame {
      // Thêm các panel vào card layout
         jpn_rightPanel.add(new JLabel("<html><h1 style='color:blue;'>Xin chào Admin</h1></html>", SwingConstants.CENTER), "HOME");
         jpn_rightPanel.add(new QuanLyUserPanel(), "USER");
-        jpn_rightPanel.add(new QuestionManager(), "QUESTION");
+        jpn_rightPanel.add(new MainFrame(), "QUESTION");
         jpn_rightPanel.add(new QuanLyAnswerPanel(), "ANSWER");
         jpn_rightPanel.add(new JLabel("Test Management Panel"), "TEST");
         jpn_rightPanel.add(new JLabel("Result Management Panel"), "RESULT");
