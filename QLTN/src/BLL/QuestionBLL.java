@@ -1,6 +1,7 @@
 package BLL;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import DAL.QuestionsDAL;
 import DTO.QuestionDTO;
@@ -41,5 +42,7 @@ public class QuestionBLL {
 	public boolean deleteQuestion(int qID) {
 		return dalquestion.deleteQuestion(qID);
 	}
+
+
 }	
 

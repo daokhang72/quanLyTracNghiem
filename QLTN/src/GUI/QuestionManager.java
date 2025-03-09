@@ -3,7 +3,6 @@ package GUI;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import BLL.QuestionBLL;
-import DAL.DatabaseHelper;
 import DTO.QuestionDTO;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,14 +19,7 @@ public class QuestionManager extends JPanel {
     private QuestionBLL questionBLL;
 
     public QuestionManager() {
-        try {
-            Connection conn = DatabaseHelper.getConnection();
-            this.questionBLL = new QuestionBLL(conn);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Lỗi kết nối cơ sở dữ liệu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-        }
-        
+        this.questionBLL = new QuestionBLL();
         setLayout(new BorderLayout());
 
         JLabel title = new JLabel("Quản lý Câu Hỏi", JLabel.CENTER);
@@ -76,7 +68,7 @@ public class QuestionManager extends JPanel {
     }
 
     void loadQuestions() {
-        List<QuestionDTO> questions = questionBLL.getAllQuestions();
+        List<QuestionDTO> questions = questionBLL.getAllQuestion();
         tableModel.setRowCount(0);
         for (QuestionDTO q : questions) {
             tableModel.addRow(new Object[]{q.getQID(), q.getQContent(), q.getQTopicID(), q.getQLevel()});

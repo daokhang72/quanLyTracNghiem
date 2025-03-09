@@ -128,15 +128,14 @@ public class AdminGUI extends JFrame {
      // Thêm các panel vào card layout
         jpn_rightPanel.add(new JLabel("<html><h1 style='color:blue;'>Xin chào Admin</h1></html>", SwingConstants.CENTER), "HOME");
         jpn_rightPanel.add(new QuanLyUserPanel(), "USER");
-        jpn_rightPanel.add(new JLabel("Question Management Panel"), "QUESTION");
+        jpn_rightPanel.add(new QuestionManager(), "QUESTION");
         jpn_rightPanel.add(new QuanLyAnswerPanel(), "ANSWER");
         jpn_rightPanel.add(new JLabel("Test Management Panel"), "TEST");
         jpn_rightPanel.add(new JLabel("Result Management Panel"), "RESULT");
         jpn_rightPanel.add(new QuanLyExam(), "EXAM");
         jpn_rightPanel.add(new JLabel("Topic Management Panel"), "TOPIC");
-        jpn_rightPanel.add(new JLabel("Exam Management Panel"), "EXAM");
         jpn_rightPanel.add(new QuanLyTopicPanel(),"TOPIC");
-        jpn_rightPanel.add(new JLabel("Log Management Panel"), "LOG");
+        jpn_rightPanel.add(new LogManagement(), "LOG");
 
         // --- SỰ KIỆN CHUYỂN PANEL ---
         btn_user.addActionListener(e -> card.show(jpn_rightPanel, "USER"));
