@@ -1,20 +1,37 @@
 package Component;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import BLL.QuestionBLL;
 import BLL.UserBLL;
+import DTO.QuestionDTO;
 import DTO.UserDTO;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class QuanLyUserPanel extends JPanel {
 	JTable userTable;
 	UserBLL userBll;
+    DefaultTableModel tableModel;
+
     public QuanLyUserPanel() {
     	userBll = new UserBLL();
     	setLayout(new BorderLayout());
@@ -25,10 +42,12 @@ public class QuanLyUserPanel extends JPanel {
         FadeButton btnEdit = new FadeButton(new Color(230, 247, 230),new Color(0, 150, 136),new Color(0, 0, 0),"Cập Nhập Thông Tin");
         FadeButton btnAdd = new FadeButton(new Color(230, 247, 230),new Color(0, 150, 136),new Color(0, 0, 0),"Thêm Người Dùng");
         FadeButton btnDelete = new FadeButton(new Color(230, 247, 230),new Color(0, 150, 136),new Color(0, 0, 0),"Xóa Người Dùng");
-        
+        FadeButton btnExcel = new FadeButton(new Color(230, 247, 230),new Color(0, 150, 136),new Color(0, 0, 0),"Nhập Excel");
+
         btnPanel.add(btnDelete);
         btnPanel.add(btnAdd);
         btnPanel.add(btnEdit);
+        btnPanel.add(btnExcel);
         
         JLabel title = new JLabel("Quản Lý User", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 20));
@@ -54,22 +73,91 @@ public class QuanLyUserPanel extends JPanel {
         	  public void actionPerformed(ActionEvent e) { 
         		userEdit();
         	  } 
-        	}
-      );
+        	});
+        btnExcel.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Chọn file Excel");
+            fileChooser.setFileFilter(new FileNameExtensionFilter("Excel Files", "xlsx", "xls"));
 
+            int returnValue = fileChooser.showOpenDialog(this);
+
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                JOptionPane.showMessageDialog(this, "Đã chọn file: " + selectedFile.getAbsolutePath());
+                
+                importExcel(selectedFile);
+            }
+        });
+    }
+    private void importExcel(File selectedFile) {
+        try (InputStream fis = Files.newInputStream(selectedFile.toPath());
+             Workbook workbook = new XSSFWorkbook(fis)) {
+
+            Sheet sheet = workbook.getSheetAt(0);
+            tableModel.setRowCount(0);
+
+            Iterator<Row> rowIterator = sheet.iterator();
+            rowIterator.next();
+
+            while (rowIterator.hasNext()) {
+
+                Row row = rowIterator.next();
+                String userName = getCellValueAsString(row.getCell(0));
+                String userEmail = getCellValueAsString(row.getCell(1));
+                String userPassword = getCellValueAsString(row.getCell(2));
+                String userFullName = getCellValueAsString(row.getCell(3));
+                if (userName.isEmpty() || userPassword.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ ở dòng: " + (row.getRowNum() + 1), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    continue;
+                }
+
+
+                UserDTO newUser = new UserDTO(0, userName, userEmail, userPassword, userFullName, false);
+                boolean isAdded = userBll.addUser(newUser);
+                if (!isAdded) {
+                    JOptionPane.showMessageDialog(null, "Lỗi khi thêm Tài Khoản!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
+            JOptionPane.showMessageDialog(null, "Nhập dữ liệu thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            loadUserTable();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi đọc file: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    }
+    private String getCellValueAsString(Cell cell) {
+        if (cell == null) return "";
+        return switch (cell.getCellType()) {
+            case STRING -> cell.getStringCellValue();
+            case NUMERIC -> String.valueOf((int) cell.getNumericCellValue());
+            default -> "";
+        };
+    }
+
+    private int getCellValueAsInt(Cell cell, int rowNum) {
+        try {
+            if (cell != null && cell.getCellType() == CellType.NUMERIC) {
+                return (int) cell.getNumericCellValue();
+            } else if (cell != null && cell.getCellType() == CellType.STRING) {
+                return Integer.parseInt(cell.getStringCellValue().trim());
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ ở dòng: " + (rowNum + 1), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+        return -1;
     }
     private void loadUserTable() {
-    	DefaultTableModel model = new DefaultTableModel();
-    	userTable.setModel(model);    	 
+    	 
         String[] columnNames = { "userID", "userName", "userEmail", "userPassword", "userFullName","isAdmin" };
+        tableModel = new DefaultTableModel(columnNames, 0);
+        userTable.setModel(tableModel);    	
     	ArrayList<UserDTO> arrListUser= new ArrayList<UserDTO>();
     	arrListUser = userBll.getAllUsers();
     	
-    	for(int i =0 ; i< columnNames.length; i++) {
-    		model.addColumn(columnNames[i]);
-    	}
+
     	for(int i =0 ; i< arrListUser.size(); i++) {
-    		model.addRow(new Object[] 
+    		tableModel.addRow(new Object[] 
     				{
     						arrListUser.get(i).getUserID(),
     						arrListUser.get(i).getUserName(),

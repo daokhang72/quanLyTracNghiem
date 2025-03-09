@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -93,6 +94,7 @@ public class FormAddUser extends JFrame{
         fullNameField = new JTextField("", 15);
         fullNameField.setFont(fieldFont);
         mainPanel.add(fullNameField, gbc);
+
         
         JPanel btnPanel = new JPanel();
         btnPanel.setBackground(Color.WHITE);

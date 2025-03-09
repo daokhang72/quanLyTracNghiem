@@ -33,7 +33,7 @@ public class UsersDAL {
             st.setString(2, user.getUserEmail());
             st.setString(3, user.getUserPassword());
             st.setString(4, user.getUserFullName());
-
+            
             return st.executeUpdate() > 0; 
         } catch (SQLException e) {
             e.printStackTrace();
