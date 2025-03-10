@@ -125,6 +125,20 @@ public class ResultDAL {
         return false;
     }
 
+    public boolean updateResultMark(int rsNum, double rsMark) {
+        String sql = "UPDATE result SET rs_mark = ? WHERE rs_num = ?";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setDouble(1, rsMark);
+            st.setInt(2, rsNum);
+            return st.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+    
     // Xóa kết quả thi theo rs_num
     public boolean deleteResult(int rsNum) {
         String sql = "DELETE FROM result WHERE rs_num = ?";

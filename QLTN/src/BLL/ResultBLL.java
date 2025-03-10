@@ -33,6 +33,10 @@ public class ResultBLL {
         return dalresult.updateResult(result);
     }
 
+    public boolean updateResultMark(ResultDTO result) {
+        return dalresult.updateResultMark(result.getRsNum(), result.getRsMark());
+    }
+    
     // Xóa kết quả thi theo rs_num
     public boolean deleteResult(int rsNum) {
         return dalresult.deleteResult(rsNum);

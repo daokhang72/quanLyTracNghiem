@@ -19,6 +19,10 @@ public class ResultDTO {
 		this.rsMark = rsMark;
 		this.rsDate = rsDate;
 	}
+	public ResultDTO(int rsNum, double rsMark) {
+		this.rsNum = rsNum;
+		this.rsMark = rsMark;
+	}
 	public int getRsNum() {
 		return rsNum;
 	}

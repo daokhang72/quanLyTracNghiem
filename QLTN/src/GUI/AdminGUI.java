@@ -24,6 +24,7 @@ import Component.LogManagement;
 import Component.MainFrame;
 import Component.QuanLyAnswerPanel;
 import Component.QuanLyExam;
+import Component.QuanLyResult;
 import Component.QuanLyTopicPanel;
 import Component.QuanLyUserPanel;
 import Component.QuestionManager;
@@ -130,9 +131,8 @@ public class AdminGUI extends JFrame {
         jpn_rightPanel.add(new QuanLyUserPanel(), "USER");
         jpn_rightPanel.add(new QuestionManager(), "QUESTION");
         jpn_rightPanel.add(new QuanLyAnswerPanel(), "ANSWER");
-        jpn_rightPanel.add(new JLabel("Result Management Panel"), "RESULT");
+        jpn_rightPanel.add(new QuanLyResult(), "RESULT");
         jpn_rightPanel.add(new QuanLyExam(), "EXAM");
-        jpn_rightPanel.add(new JLabel("Topic Management Panel"), "TOPIC");
         jpn_rightPanel.add(new QuanLyTopicPanel(),"TOPIC");
         jpn_rightPanel.add(new LogManagement(), "LOG");
 
