@@ -29,12 +29,13 @@ import Component.QuanLyTopicPanel;
 import Component.QuanLyUserPanel;
 import Component.QuestionManager;
 import Component.RoundedButton;
+import Component.StatisticalPanel;
 
 public class AdminGUI extends JFrame {
     private JPanel jpn_login, jpn_rightPanel;
     private ImageIcon img_logo;
     private JLabel jlb_logo;
-    private JButton btn_user, btn_question, btn_answer, btn_result, btn_exam, btn_topic, btn_log,btn_logout;
+    private JButton btn_user, btn_question, btn_answer, btn_result, btn_exam, btn_topic,btn_thongke, btn_log,btn_logout;
     private CardLayout card;
 
     public AdminGUI() {
@@ -105,6 +106,10 @@ public class AdminGUI extends JFrame {
         jpn_login.add(btn_log, gbc);
         
         gbc.gridy++;
+        btn_thongke = createButton("Statistical Management", f_button, btnColor);
+        jpn_login.add(btn_thongke, gbc);
+        
+        gbc.gridy++;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.SOUTH; 
         btn_logout = createButton("Logout", f_button, Color.RED);
@@ -135,6 +140,7 @@ public class AdminGUI extends JFrame {
         jpn_rightPanel.add(new QuanLyExam(), "EXAM");
         jpn_rightPanel.add(new QuanLyTopicPanel(),"TOPIC");
         jpn_rightPanel.add(new LogManagement(), "LOG");
+        jpn_rightPanel.add(new StatisticalPanel(), "STATISTICAL");
 
         // --- SỰ KIỆN CHUYỂN PANEL ---
         btn_user.addActionListener(e -> card.show(jpn_rightPanel, "USER"));
@@ -144,6 +150,7 @@ public class AdminGUI extends JFrame {
         btn_exam.addActionListener(e -> card.show(jpn_rightPanel, "EXAM"));
         btn_topic.addActionListener(e -> card.show(jpn_rightPanel, "TOPIC"));
         btn_log.addActionListener(e -> card.show(jpn_rightPanel, "LOG"));
+        btn_thongke.addActionListener(e -> card.show(jpn_rightPanel, "STATISTICAL"));
 
         // --- THÊM PANEL VÀO FRAME ---
         this.setLayout(new BorderLayout());

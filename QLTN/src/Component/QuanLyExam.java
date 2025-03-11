@@ -206,13 +206,28 @@ public class QuanLyExam extends JPanel {
 		});
 
 		btnAddExam.addActionListener(e -> {
-			int selectedRowTest = tableTest.getSelectedRow();
-			String order = txtExamOrder.getText();
+		    int selectedRowTest = tableTest.getSelectedRow();
+		    
+		    
+		    if (selectedRowTest == -1) {
+		        JOptionPane.showMessageDialog(QuanLyExam.this, "Vui lòng chọn một đề thi trước khi thêm!");
+		        return;
+		    }
 
-			ExamDTO examDto = new ExamDTO((modelTest.getValueAt(selectedRowTest, 1).toString()), order, "1", "1");
-			examBll.addExam(examDto);
-			loadExamData(modelTest.getValueAt(selectedRowTest, 1).toString());
+		    String order = txtExamOrder.getText();
+		    
+		    if (order.isEmpty()) {
+		        JOptionPane.showMessageDialog(QuanLyExam.this, "Vui lòng nhập mã đề");
+		        return;
+		    }
+
+		    String testCode = modelTest.getValueAt(selectedRowTest, 1).toString();
+
+		    ExamDTO examDto = new ExamDTO(testCode, order, "1", "1");
+		    examBll.addExam(examDto);
+		    loadExamData(testCode);
 		});
+
 
 		btnDeleteExam.addActionListener(e -> {
 			int selectedRow = tableExam.getSelectedRow();
