@@ -66,4 +66,8 @@ public class QuestionDTO {
     public void setQStatus(int qStatus) {
         this.qStatus = qStatus;
     }
+    @Override
+    public String toString() {
+    	return String.valueOf(qID);
+    }
 }

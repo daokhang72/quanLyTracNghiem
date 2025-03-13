@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class QuanLyExam extends JPanel {
 	private JTable tableTest, tableExam;
@@ -222,8 +224,12 @@ public class QuanLyExam extends JPanel {
 		    }
 
 		    String testCode = modelTest.getValueAt(selectedRowTest, 1).toString();
-
-		    ExamDTO examDto = new ExamDTO(testCode, order, "1", "1");
+		    String testId = modelTest.getValueAt(selectedRowTest, 0).toString();
+		    List<QuestionDTO> listQuestion = qsBll.getRandomQuestionsByTestID(Integer.parseInt(testId));	
+		    String listQuestionString = listQuestion.stream()
+		    	    .map(question -> question.toString())
+		    	    .collect(Collectors.joining(", "));
+		    ExamDTO examDto = new ExamDTO(testCode, order, "1", listQuestionString);
 		    examBll.addExam(examDto);
 		    loadExamData(testCode);
 		});
