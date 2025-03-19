@@ -39,16 +39,19 @@ public class QuanLyAnswerPanel extends JPanel{
         FadeButton btnAdd = new FadeButton(new Color(230, 247, 230),new Color(0, 150, 136),new Color(0, 0, 0),"Thêm đáp án");
         FadeButton btnEdit = new FadeButton(new Color(230, 247, 230),new Color(0, 150, 136),new Color(0, 0, 0),"Sửa đáp án");
         FadeButton btnDelete = new FadeButton(new Color(230, 247, 230),new Color(0, 150, 136),new Color(0, 0, 0),"Xóa đáp án");
+        FadeButton btnCorrect = new FadeButton(new Color(230, 247, 230),new Color(0, 150, 136),new Color(0, 0, 0),"Đáp án đúng");
         
         btnPanel.add(btnAdd);
         btnPanel.add(btnEdit);
         btnPanel.add(btnDelete);
+        btnPanel.add(btnCorrect);
         
         add(btnPanel, BorderLayout.SOUTH);
         
         btnAdd.addActionListener(e -> AddAnswer());
         btnDelete.addActionListener(e -> DeleteAnswer());
         btnEdit.addActionListener(e -> EditAnswer());
+        btnCorrect.addActionListener(e -> showRightAnswers());
 	}
 	private void loadAnswerTable() {
 		DefaultTableModel model = new DefaultTableModel();
@@ -107,4 +110,23 @@ public class QuanLyAnswerPanel extends JPanel{
             }
         });
 	}
+	private void showRightAnswers() {
+	    DefaultTableModel model = new DefaultTableModel();
+	    answerTable.setModel(model);
+	    String[] columnNames = { "Answer ID", "Question ID ", "Nội dung", "Hình ảnh", "IsRight", "Trạng thái" };
+	    model.setColumnIdentifiers(columnNames);
+
+	    ArrayList<AnswerDTO> rightAnswers = answerbll.getRightAnswers();
+	    for (AnswerDTO ans : rightAnswers) {
+	        model.addRow(new Object[]{
+	            ans.getAwID(), ans.getQID(), ans.getAwContent(),
+	            ans.getAwPictures(), ans.isRight() ? "1" : "0", ans.getAwStatus()
+	        });
+	    }
+	    
+	    if (rightAnswers.isEmpty()) {
+	        JOptionPane.showMessageDialog(this, "Không có đáp án đúng nào!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+	    }
+	}
+
 }

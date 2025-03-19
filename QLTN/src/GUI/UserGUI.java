@@ -2,6 +2,7 @@ package GUI;
 
 import Component.GradientPanel;
 import Component.ThongTinCaNhanPanel;
+import Component.TopicPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -96,7 +97,7 @@ public class UserGUI extends JFrame {
                 contentPanel.add(new ThongTinCaNhanPanel(), BorderLayout.CENTER);
                 break;
             case "Môn Học":
-                contentPanel.add(new JLabel("Môn Học Panel", SwingConstants.CENTER), BorderLayout.CENTER);
+                contentPanel.add(new TopicPanel(), BorderLayout.CENTER);
                 break;
             case "Kiểm Tra":
                 contentPanel.add(new JLabel("Kiểm Tra Panel", SwingConstants.CENTER), BorderLayout.CENTER);

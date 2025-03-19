@@ -114,20 +114,29 @@ public class AnswersDAL {
         }
     }
     // xác định đáp án đúng
-    public String getRightAnswer(int qid) {
-        String sql = "SELECT awcontent FROM answers WHERE qid = ? AND isRight = 1"; 
+    public ArrayList<AnswerDTO> getRightAnswers() {
+        ArrayList<AnswerDTO> rightAnswers = new ArrayList<>();
+        String sql = "SELECT * FROM answers WHERE isRight = 1"; 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, qid);  
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return rs.getString("awcontent");
+            while (rs.next()) {
+                AnswerDTO ans = new AnswerDTO();
+                ans.setAwID(rs.getInt("awID"));
+                ans.setQID(rs.getInt("qID"));
+                ans.setAwContent(rs.getString("awContent"));
+                ans.setAwPictures(rs.getString("awPictures"));
+                ans.setRight(rs.getBoolean("isRight"));
+                ans.setAwStatus(rs.getInt("awStatus"));
+                rightAnswers.add(ans);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null; 
+        return rightAnswers; 
     }
+
+
     public AnswerDTO getAnswerByID(int awID) {
         String query = "SELECT * FROM Answers WHERE awID = ?";
         try (

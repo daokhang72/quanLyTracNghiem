@@ -46,5 +46,8 @@ public class AnswerBLL {
 	public AnswerDTO getAnswerByID(int awID) {
 	    return dalanswer.getAnswerByID(awID);
 	}
-
+	//xác định đáp án đúng
+	public ArrayList<AnswerDTO> getRightAnswers(){
+		return dalanswer.getRightAnswers();
+	}
 }
